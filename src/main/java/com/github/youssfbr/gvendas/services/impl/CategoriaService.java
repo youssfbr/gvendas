@@ -1,5 +1,6 @@
 package com.github.youssfbr.gvendas.services.impl;
 
+import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
 import com.github.youssfbr.gvendas.entities.Categoria;
 import com.github.youssfbr.gvendas.repositories.ICategoriaRepository;
 import com.github.youssfbr.gvendas.services.ICategoriaService;
@@ -18,14 +19,20 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Categoria> findAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoriaResponseDTO> findAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(CategoriaResponseDTO::new)
+                .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Categoria findCategoryById(Long id) {
-        return checkCategoryExistsById(id);
+    public CategoriaResponseDTO findCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .map(CategoriaResponseDTO::new)
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MESSAGE + id));
+
     }
 
     @Override

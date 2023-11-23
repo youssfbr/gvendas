@@ -1,5 +1,6 @@
 package com.github.youssfbr.gvendas.controllers;
 
+import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
 import com.github.youssfbr.gvendas.entities.Categoria;
 import com.github.youssfbr.gvendas.services.ICategoriaService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class CategoriaController {
     private final ICategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAllCategories() {
+    public ResponseEntity<List<CategoriaResponseDTO>> findAllCategories() {
         return ResponseEntity.ok(categoriaService.findAllCategories());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> findCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoriaResponseDTO> findCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.findCategoryById(id));
     }
 

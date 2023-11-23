@@ -17,7 +17,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, unique = true)
+    @Column(length = 50, nullable = false, unique = true)
     private String nome;
 
     @Column(updatable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
