@@ -39,4 +39,9 @@ public class CategoriaController {
 
         return ResponseEntity.created(location).body(categoryCreated);
     }
+
+    @PutMapping
+    public ResponseEntity<Categoria> updateCategory(@RequestBody Categoria categoria) {
+        return ResponseEntity.ok(categoriaService.updateCategory(categoria));
+    }
 }

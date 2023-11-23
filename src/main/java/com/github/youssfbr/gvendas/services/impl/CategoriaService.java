@@ -25,13 +25,28 @@ public class CategoriaService implements ICategoriaService {
     @Override
     @Transactional(readOnly = true)
     public Categoria findCategoryById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MESSAGE + id));
+        return checkCategoryExistsById(id);
     }
 
     @Override
     @Transactional
     public Categoria createCategory(Categoria categoria) {
         return categoryRepository.save(categoria);
+    }
+
+    @Override
+    @Transactional
+    public Categoria updateCategory(Categoria categoria) {
+
+        final Categoria categoryToUpdate = checkCategoryExistsById(categoria.getId());
+
+        categoryToUpdate.setNome(categoria.getNome());
+
+        return categoryRepository.save(categoryToUpdate);
+    }
+
+    private Categoria checkCategoryExistsById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MESSAGE + id));
     }
 }
