@@ -41,7 +41,7 @@ public class Produto {
     private Set<String> imgUrl = new HashSet<>();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant date;
+    private Instant data;
 
     @ManyToMany
     @JoinTable(name = "tb_produto_categoria",
