@@ -28,4 +28,10 @@ public class CategoriaService implements ICategoriaService {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MESSAGE + id));
     }
+
+    @Override
+    @Transactional
+    public Categoria createCategory(Categoria categoria) {
+        return categoryRepository.save(categoria);
+    }
 }
