@@ -1,5 +1,6 @@
 package com.github.youssfbr.gvendas.controllers;
 
+import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
 import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
 import com.github.youssfbr.gvendas.entities.Categoria;
 import com.github.youssfbr.gvendas.services.ICategoriaService;
@@ -29,9 +30,9 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> createCategory(@RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaResponseDTO> createCategory(@RequestBody CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
 
-        Categoria categoryCreated = categoriaService.createCategory(categoria);
+        CategoriaResponseDTO categoryCreated = categoriaService.createCategory(categoriaCreateRequestDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

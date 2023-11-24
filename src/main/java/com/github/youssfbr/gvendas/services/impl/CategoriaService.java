@@ -1,5 +1,6 @@
 package com.github.youssfbr.gvendas.services.impl;
 
+import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
 import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
 import com.github.youssfbr.gvendas.entities.Categoria;
 import com.github.youssfbr.gvendas.repositories.ICategoriaRepository;
@@ -37,8 +38,10 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     @Transactional
-    public Categoria createCategory(Categoria categoria) {
-        return categoryRepository.save(categoria);
+    public CategoriaResponseDTO createCategory(CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
+        final Categoria categoriaToSave = new Categoria(categoriaCreateRequestDTO);
+        final Categoria categoriaSave = categoryRepository.save(categoriaToSave);
+        return new CategoriaResponseDTO(categoriaSave);
     }
 
     @Override

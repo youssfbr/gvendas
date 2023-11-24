@@ -1,5 +1,6 @@
 package com.github.youssfbr.gvendas.entities;
 
+import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,10 @@ public class Categoria {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
+
+    public Categoria(CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
+        nome = categoriaCreateRequestDTO.getNome();
+    }
 
     @PrePersist
     public void prePersist() {
