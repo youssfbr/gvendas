@@ -39,9 +39,12 @@ public class CategoriaService implements ICategoriaService {
     @Override
     @Transactional
     public CategoriaResponseDTO createCategory(CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
+
         final Categoria categoriaToSave = new Categoria(categoriaCreateRequestDTO);
-        final Categoria categoriaSave = categoryRepository.save(categoriaToSave);
-        return new CategoriaResponseDTO(categoriaSave);
+
+        final Categoria categoriaSaved = categoryRepository.save(categoriaToSave);
+
+        return new CategoriaResponseDTO(categoriaSaved);
     }
 
     @Override
