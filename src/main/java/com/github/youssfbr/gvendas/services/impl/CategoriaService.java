@@ -2,6 +2,7 @@ package com.github.youssfbr.gvendas.services.impl;
 
 import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
 import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
+import com.github.youssfbr.gvendas.dtos.CategoriaUpdateRequestDTO;
 import com.github.youssfbr.gvendas.entities.Categoria;
 import com.github.youssfbr.gvendas.repositories.ICategoriaRepository;
 import com.github.youssfbr.gvendas.services.ICategoriaService;
@@ -49,13 +50,14 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     @Transactional
-    public Categoria updateCategory(Categoria categoria) {
+    public CategoriaResponseDTO updateCategory(CategoriaUpdateRequestDTO categoriaUpdateRequestDTO) {
 
-        final Categoria categoryToUpdate = checkCategoryExistsById(categoria.getId());
+        final Categoria categoryToUpdate = checkCategoryExistsById(categoriaUpdateRequestDTO.getId());
+        categoryToUpdate.setNome(categoriaUpdateRequestDTO.getNome());
 
-        categoryToUpdate.setNome(categoria.getNome());
+        final Categoria categoriaUpdated = categoryRepository.save(categoryToUpdate);
 
-        return categoryRepository.save(categoryToUpdate);
+        return new CategoriaResponseDTO(categoriaUpdated);
     }
 
     private Categoria checkCategoryExistsById(Long id) {

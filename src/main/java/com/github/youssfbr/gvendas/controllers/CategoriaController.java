@@ -2,7 +2,7 @@ package com.github.youssfbr.gvendas.controllers;
 
 import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
 import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
-import com.github.youssfbr.gvendas.entities.Categoria;
+import com.github.youssfbr.gvendas.dtos.CategoriaUpdateRequestDTO;
 import com.github.youssfbr.gvendas.services.ICategoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +43,7 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<Categoria> updateCategory(@RequestBody Categoria categoria) {
-        return ResponseEntity.ok(categoriaService.updateCategory(categoria));
+    public ResponseEntity<CategoriaResponseDTO> updateCategory(@RequestBody CategoriaUpdateRequestDTO categoriaUpdateRequestDTO) {
+        return ResponseEntity.ok(categoriaService.updateCategory(categoriaUpdateRequestDTO));
     }
 }
