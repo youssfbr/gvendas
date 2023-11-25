@@ -1,9 +1,9 @@
 package com.github.youssfbr.gvendas.controllers;
 
-import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
-import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
-import com.github.youssfbr.gvendas.dtos.CategoriaUpdateRequestDTO;
-import com.github.youssfbr.gvendas.services.ICategoriaService;
+import com.github.youssfbr.gvendas.dtos.CategoryCreateRequestDTO;
+import com.github.youssfbr.gvendas.dtos.CategoryResponseDTO;
+import com.github.youssfbr.gvendas.dtos.CategoryUpdateRequestDTO;
+import com.github.youssfbr.gvendas.services.ICategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,27 +20,27 @@ import java.util.List;
 @Tag(name = "Categoria")
 @RequiredArgsConstructor
 @RequestMapping("/categories")
-public class CategoriaController {
+public class CategoryController {
 
-    private final ICategoriaService categoriaService;
+    private final ICategoryService categoriaService;
 
     @GetMapping
     @Operation(summary = "Listar", description = "Listar todas as categorias")
-    public ResponseEntity<List<CategoriaResponseDTO>> findAllCategories() {
+    public ResponseEntity<List<CategoryResponseDTO>> findAllCategories() {
         return ResponseEntity.ok(categoriaService.findAllCategories());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Listar por ID", description = "Listar uma categoria pelo ID (Número)")
-    public ResponseEntity<CategoriaResponseDTO> findCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryResponseDTO> findCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.findCategoryById(id));
     }
 
     @PostMapping
     @Operation(summary = "Salvar", description = "Salvar uma categoria")
-    public ResponseEntity<CategoriaResponseDTO> createCategory(@Valid @RequestBody CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
+    public ResponseEntity<CategoryResponseDTO> createCategory(@Valid @RequestBody CategoryCreateRequestDTO categoryCreateRequestDTO) {
 
-        CategoriaResponseDTO categoryCreated = categoriaService.createCategory(categoriaCreateRequestDTO);
+        CategoryResponseDTO categoryCreated = categoriaService.createCategory(categoryCreateRequestDTO);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -52,7 +52,7 @@ public class CategoriaController {
 
     @PutMapping
     @Operation(summary = "Atualizar", description = "Atualiza uma categoria")
-    public ResponseEntity<CategoriaResponseDTO> updateCategory(@Valid @RequestBody CategoriaUpdateRequestDTO categoriaUpdateRequestDTO) {
-        return ResponseEntity.ok(categoriaService.updateCategory(categoriaUpdateRequestDTO));
+    public ResponseEntity<CategoryResponseDTO> updateCategory(@Valid @RequestBody CategoryUpdateRequestDTO categoryUpdateRequestDTO) {
+        return ResponseEntity.ok(categoriaService.updateCategory(categoryUpdateRequestDTO));
     }
 }

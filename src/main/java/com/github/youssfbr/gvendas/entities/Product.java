@@ -12,28 +12,28 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tb_produto")
+@Entity(name = "tb_product")
 @EqualsAndHashCode(of = "id")
-public class Produto {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 100, nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
-    private Integer quantidade;
+    private Integer quantity;
 
     @Column(nullable = false)
-    private BigDecimal precoCusto;
+    private BigDecimal costPrice;
 
     @Column(nullable = false)
-    private BigDecimal precoVenda;
+    private BigDecimal salePrice;
 
     @Column(columnDefinition = "TEXT")
-    private String observacao;
+    private String note;
 
     @ElementCollection
     @JoinTable(name = "tb_product_url_img",
@@ -41,12 +41,12 @@ public class Produto {
     private Set<String> imgUrl = new HashSet<>();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant data;
+    private Instant date;
 
     @ManyToMany
-    @JoinTable(name = "tb_produto_categoria",
-            joinColumns = @JoinColumn(name = "produto_id"),
-            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    private Set<Categoria> categorias = new HashSet<>();
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
 }

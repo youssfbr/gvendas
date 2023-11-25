@@ -1,6 +1,6 @@
 package com.github.youssfbr.gvendas.entities;
 
-import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
+import com.github.youssfbr.gvendas.dtos.CategoryCreateRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,16 +10,16 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tb_categoria")
+@Entity(name = "tb_category")
 @EqualsAndHashCode(of = "id")
-public class Categoria {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 50, nullable = false, unique = true)
-    private String nome;
+    private String name;
 
     @Column(updatable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
@@ -27,8 +27,8 @@ public class Categoria {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
 
-    public Categoria(CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
-        nome = categoriaCreateRequestDTO.getNome();
+    public Category(CategoryCreateRequestDTO categoryCreateRequestDTO) {
+        name = categoryCreateRequestDTO.getName();
     }
 
     @PrePersist

@@ -5,11 +5,9 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
-public class CategoriaUpdateRequestDTO {
-
-    private Long id;
+public class CategoryCreateRequestDTO {
 
     @NotBlank
     @Length(min = 3, max = 50)
-    private String nome;
+    private String name;
 }
