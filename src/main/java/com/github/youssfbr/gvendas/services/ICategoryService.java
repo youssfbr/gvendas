@@ -11,4 +11,5 @@ public interface ICategoryService {
     CategoryResponseDTO findCategoryById(Long id);
     CategoryResponseDTO createCategory(CategoryCreateRequestDTO categoryCreateRequestDTO);
     CategoryResponseDTO updateCategory(CategoryUpdateRequestDTO categoryUpdateRequestDTO);
+    void deleteCategory(Long id);
 }

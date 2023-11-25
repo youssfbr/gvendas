@@ -21,6 +21,9 @@ public class Category {
     @Column(length = 50, nullable = false, unique = true)
     private String name;
 
+    @Column(name = "active")
+    private boolean isActive;
+
     @Column(updatable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
 

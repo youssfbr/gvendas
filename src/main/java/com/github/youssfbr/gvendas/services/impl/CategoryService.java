@@ -6,6 +6,7 @@ import com.github.youssfbr.gvendas.dtos.CategoryUpdateRequestDTO;
 import com.github.youssfbr.gvendas.entities.Category;
 import com.github.youssfbr.gvendas.repositories.ICategoryRepository;
 import com.github.youssfbr.gvendas.services.ICategoryService;
+import com.github.youssfbr.gvendas.services.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class CategoryService implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public List<CategoryResponseDTO> findAllCategories() {
-        return categoryRepository.findAll()
+        return categoryRepository.findAllByIsActiveTrue()
                 .stream()
                 .map(CategoryResponseDTO::new)
                 .toList();
@@ -31,10 +32,9 @@ public class CategoryService implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public CategoryResponseDTO findCategoryById(Long id) {
-        return categoryRepository.findById(id)
+        return categoryRepository.findByIdAndIsActiveTrue(id)
                 .map(CategoryResponseDTO::new)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MESSAGE + id));
-
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MESSAGE + id));
     }
 
     @Override
@@ -60,8 +60,21 @@ public class CategoryService implements ICategoryService {
         return new CategoryResponseDTO(categoryUpdated);
     }
 
+    @Override
+    @Transactional
+    public void deleteCategory(Long id) {
+
+        Category category = checkCategoryExistsById(id);
+
+        if (!category.isActive()) throw new ResourceNotFoundException(NOT_FOUND_MESSAGE + id);
+
+        category.setActive(false);
+
+        categoryRepository.save(category);
+    }
+
     private Category checkCategoryExistsById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(NOT_FOUND_MESSAGE + id));
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MESSAGE + id));
     }
 }

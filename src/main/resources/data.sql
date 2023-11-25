@@ -1,8 +1,8 @@
-INSERT INTO tb_category (name, created_at) VALUES ('Tecnologia', now());
-INSERT INTO tb_category (name, created_at) VALUES ('Acessórios para veículos', now());
-INSERT INTO tb_category (name, created_at) VALUES ('Esporte e Lazer', now());
-INSERT INTO tb_category (name, created_at) VALUES ('Casa e Eletrodomésticos', now());
-INSERT INTO tb_category (name, created_at) VALUES ('Joias e Relógios', now());
+INSERT INTO tb_category (name, created_at, active) VALUES ('Tecnologia', now(), 1);
+INSERT INTO tb_category (name, created_at, active) VALUES ('Acessórios para veículos', now(), 1);
+INSERT INTO tb_category (name, created_at, active) VALUES ('Esporte e Lazer', now(), 1);
+INSERT INTO tb_category (name, created_at, active) VALUES ('Casa e Eletrodomésticos', now(), 1);
+INSERT INTO tb_category (name, created_at, active) VALUES ('Joias e Relógios', now(), 1);
 
 INSERT INTO tb_product (name, quantity, cost_price, sale_price, note, date) VALUES ('TV Philco 32"', 10, 500, 870, 'Tv 32 Polegadas Philco Led Hd Conv. Digital Ptv32b51d', now());
 INSERT INTO tb_product (name, quantity, cost_price, sale_price, note, date) VALUES ('AOC Smart TV 43"', 10, 1250, 1623.20, 'Smart Tv Led 43 Polegadas Aoc Le43s5970s Full Hd Wi-fi 2 Usb', now());
