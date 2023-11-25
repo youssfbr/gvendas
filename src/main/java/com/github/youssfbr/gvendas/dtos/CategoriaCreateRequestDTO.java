@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 public class CategoriaCreateRequestDTO {
 
-    @NotBlank(message = "O Nome")
-    @Length(min = 3, max = 50, message = "O Nome")
+    @NotBlank
+    @Length(min = 3, max = 50)
     private String nome;
 }
