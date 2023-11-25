@@ -4,6 +4,7 @@ import com.github.youssfbr.gvendas.dtos.CategoriaCreateRequestDTO;
 import com.github.youssfbr.gvendas.dtos.CategoriaResponseDTO;
 import com.github.youssfbr.gvendas.dtos.CategoriaUpdateRequestDTO;
 import com.github.youssfbr.gvendas.services.ICategoriaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaResponseDTO> createCategory(@RequestBody CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
+    public ResponseEntity<CategoriaResponseDTO> createCategory(@Valid @RequestBody CategoriaCreateRequestDTO categoriaCreateRequestDTO) {
 
         CategoriaResponseDTO categoryCreated = categoriaService.createCategory(categoriaCreateRequestDTO);
 
@@ -43,7 +44,7 @@ public class CategoriaController {
     }
 
     @PutMapping
-    public ResponseEntity<CategoriaResponseDTO> updateCategory(@RequestBody CategoriaUpdateRequestDTO categoriaUpdateRequestDTO) {
+    public ResponseEntity<CategoriaResponseDTO> updateCategory(@Valid @RequestBody CategoriaUpdateRequestDTO categoriaUpdateRequestDTO) {
         return ResponseEntity.ok(categoriaService.updateCategory(categoriaUpdateRequestDTO));
     }
 }
