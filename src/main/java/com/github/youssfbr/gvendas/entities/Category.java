@@ -18,11 +18,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(name = "active")
-    private boolean isActive;
+    private Boolean active;
+
 
     @Column(updatable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
@@ -36,6 +36,7 @@ public class Category {
 
     @PrePersist
     public void prePersist() {
+        active = Boolean.TRUE;
         createdAt = Instant.now();
     }
 

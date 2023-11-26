@@ -6,12 +6,14 @@ import com.github.youssfbr.gvendas.dtos.CategoryUpdateRequestDTO;
 import com.github.youssfbr.gvendas.entities.Category;
 import com.github.youssfbr.gvendas.repositories.ICategoryRepository;
 import com.github.youssfbr.gvendas.services.ICategoryService;
+import com.github.youssfbr.gvendas.services.exceptions.ResourceAlreadyExistsException;
 import com.github.youssfbr.gvendas.services.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class CategoryService implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public List<CategoryResponseDTO> findAllCategories() {
-        return categoryRepository.findAllByIsActiveTrue()
+        return categoryRepository.findAllByActiveTrue()
                 .stream()
                 .map(CategoryResponseDTO::new)
                 .toList();
@@ -32,7 +34,7 @@ public class CategoryService implements ICategoryService {
     @Override
     @Transactional(readOnly = true)
     public CategoryResponseDTO findCategoryById(Long id) {
-        return categoryRepository.findByIdAndIsActiveTrue(id)
+        return categoryRepository.findByIdAndActiveTrue(id)
                 .map(CategoryResponseDTO::new)
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MESSAGE + id));
     }
@@ -40,6 +42,8 @@ public class CategoryService implements ICategoryService {
     @Override
     @Transactional
     public CategoryResponseDTO createCategory(CategoryCreateRequestDTO categoryCreateRequestDTO) {
+
+        checkCategoryExistsByName(categoryCreateRequestDTO.getName());
 
         final Category categoryToSave = new Category(categoryCreateRequestDTO);
 
@@ -66,7 +70,8 @@ public class CategoryService implements ICategoryService {
 
         Category category = checkCategoryExistsById(id);
 
-        if (!category.isActive()) throw new ResourceNotFoundException(NOT_FOUND_MESSAGE + id);
+        if (Boolean.FALSE.equals(category.getActive()))
+            throw new ResourceNotFoundException(NOT_FOUND_MESSAGE + id);
 
         category.setActive(false);
 
@@ -76,5 +81,16 @@ public class CategoryService implements ICategoryService {
     private Category checkCategoryExistsById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND_MESSAGE + id));
+    }
+
+    private void checkCategoryExistsByName(String name) {
+
+        final Optional<Category> cat = categoryRepository.findByName(name)
+                .stream()
+                .filter(x -> x.getName().equals(name))
+                .findAny();
+
+        if (cat.isPresent() && Boolean.TRUE.equals(cat.get().getActive()))
+            throw new ResourceAlreadyExistsException(String.format("A Categoria %s já existe." , name.toUpperCase()));
     }
 }

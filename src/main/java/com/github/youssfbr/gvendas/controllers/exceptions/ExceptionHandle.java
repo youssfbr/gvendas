@@ -1,5 +1,6 @@
 package com.github.youssfbr.gvendas.controllers.exceptions;
 
+import com.github.youssfbr.gvendas.services.exceptions.ResourceAlreadyExistsException;
 import com.github.youssfbr.gvendas.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ExceptionHandle extends ResponseEntityExceptionHandler {
 
     private static final HttpStatus NOT_FOUND = HttpStatus.NOT_FOUND;
+    private static final HttpStatus BAD_REQUEST = HttpStatus.BAD_REQUEST;
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardError> resourceNotFoundException (
@@ -36,6 +38,21 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
                 .build();
 
         return ResponseEntity.status(NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<StandardError> resourceAlreadyExistsException (
+            ResourceAlreadyExistsException e,
+            HttpServletRequest request) {
+
+        StandardError error = StandardError.builder()
+                .timestamp(Instant.now())
+                .status(BAD_REQUEST.value())
+                .error(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(BAD_REQUEST).body(error);
     }
 
     @Override

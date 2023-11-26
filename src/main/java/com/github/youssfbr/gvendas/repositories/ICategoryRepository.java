@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findAllByIsActiveTrue();
-    Optional<Category> findByIdAndIsActiveTrue(Long id);
+    List<Category> findAllByActiveTrue();
+    Optional<Category> findByIdAndActiveTrue(Long id);
+    List<Category> findByName(String name);
 }
